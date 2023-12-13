@@ -26,7 +26,7 @@ import {orderBy} from '~/utils/cjs/lodash.js'
 import {ServerError} from '~/components/errors.tsx'
 import {TriangleIcon} from '~/components/icons.tsx'
 import {AnimatePresence, motion, useReducedMotion} from 'framer-motion'
-import {getEpisodes} from '~/utils/transistor.server.ts'
+import {getEpisodes, getEpisodesBySeason} from '~/utils/transistor.server.ts'
 import {getServerTimeHeader} from '~/utils/timing.server.ts'
 import {useCallsEpisodeUIState} from '~/utils/providers.tsx'
 
@@ -35,7 +35,6 @@ import {
   reuseUsefulLoaderHeaders,
   useCapturedRouteError,
 } from '~/utils/misc.tsx'
-import {getEpisodesBySeason} from '../calls.tsx'
 
 export const handle: KCDHandle = {
   getSitemapEntries: async request => {

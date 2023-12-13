@@ -1,7 +1,9 @@
 import slugify from '@sindresorhus/slugify'
 import * as uuid from 'uuid'
 import {
+  type Await,
   type CallKentEpisode,
+  type CallKentSeason,
   type TransistorAuthorizedJson,
   type TransistorCreateEpisodeData,
   type TransistorCreatedJson,
@@ -10,6 +12,7 @@ import {
   type TransistorPublishedJson,
   type TransistorUpdateEpisodeData,
 } from '~/types.ts'
+import {groupBy} from '~/utils/cjs/lodash.js'
 import {cache, cachified} from './cache.server.ts'
 import {getEpisodePath} from './call-kent.ts'
 import {stripHtml} from './markdown.server.ts'
@@ -294,6 +297,20 @@ async function getCachedEpisodes({
         v => typeof v.slug === 'string' && typeof v.title === 'string',
       ),
   })
+}
+
+export const getEpisodesBySeason = (
+  episodes: Await<ReturnType<typeof getEpisodes>>,
+) => {
+  const groupedEpisodeBySeasons = groupBy(episodes, 'seasonNumber')
+  const seasons: Array<CallKentSeason> = []
+  Object.entries(groupedEpisodeBySeasons).forEach(([key, value]) => {
+    seasons.push({
+      seasonNumber: +key,
+      episodes: value,
+    })
+  })
+  return seasons
 }
 
 export {createEpisode, getCachedEpisodes as getEpisodes}

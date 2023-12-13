@@ -42,7 +42,7 @@ import {
 } from '~/utils/providers.tsx'
 import {getSocialMetas} from '~/utils/seo.ts'
 import {getServerTimeHeader} from '~/utils/timing.server.ts'
-import {getEpisodes} from '~/utils/transistor.server.ts'
+import {getEpisodes, getEpisodesBySeason} from '~/utils/transistor.server.ts'
 import {type RootLoaderType} from '~/root.tsx'
 import {Tab, TabList, TabPanel, TabPanels, Tabs} from '@reach/tabs'
 import {groupBy} from '~/utils/cjs/lodash.js'
@@ -54,20 +54,6 @@ export const handle: KCDHandle & {id: string} = {
 export type LoaderData = {
   episodes: Await<ReturnType<typeof getEpisodes>>
   blogRecommendations: Await<ReturnType<typeof getBlogRecommendations>>
-}
-
-export const getEpisodesBySeason = (
-  episodes: Await<ReturnType<typeof getEpisodes>>,
-) => {
-  const groupedEpisodeBySeasons = groupBy(episodes, 'seasonNumber')
-  const seasons: Array<CallKentSeason> = []
-  Object.entries(groupedEpisodeBySeasons).forEach(([key, value]) => {
-    seasons.push({
-      seasonNumber: +key,
-      episodes: value,
-    })
-  })
-  return seasons
 }
 
 export const loader: LoaderFunction = async ({request}) => {
