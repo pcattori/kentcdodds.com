@@ -14,7 +14,7 @@ import {getImageBuilder, getImgProps} from '~/images.tsx'
 import {pathedRoutes} from '~/other-routes.server.ts'
 import {type KCDHandle} from '~/types.ts'
 import {getBlogRecommendations} from '~/utils/blog.server.ts'
-import {getMdxPage, getMdxPagesInDirectory} from '~/utils/mdx.server'
+import {getMdxPage} from '~/utils/mdx.server.ts'
 import {
   getBannerAltProp,
   getBannerTitleProp,
@@ -27,6 +27,7 @@ import {getServerTimeHeader} from '~/utils/timing.server.ts'
 export const handle: KCDHandle = {
   getSitemapEntries: import.meta.env.SSR
     ? async request => {
+        const {getMdxPagesInDirectory} = await import('~/utils/mdx.server.ts')
         const pages = await getMdxPagesInDirectory('pages', {request})
         return pages
           .filter(page => !page.frontmatter.draft)
