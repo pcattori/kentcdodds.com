@@ -34,17 +34,19 @@ import {useMatchLoaderData} from '~/utils/providers.tsx'
 
 export const handle: KCDHandle = {
   id: 'call-player',
-  getSitemapEntries: async request => {
-    const episodes = await getEpisodes({request})
-    return episodes.map(episode => {
-      return {
-        route: getEpisodePath(episode),
-        changefreq: 'weekly',
-        lastmod: new Date(episode.updatedAt).toISOString(),
-        priority: 0.3,
+  getSitemapEntries: import.meta.env.SSR
+    ? async request => {
+        const episodes = await getEpisodes({request})
+        return episodes.map(episode => {
+          return {
+            route: getEpisodePath(episode),
+            changefreq: 'weekly',
+            lastmod: new Date(episode.updatedAt).toISOString(),
+            priority: 0.3,
+          }
+        })
       }
-    })
-  },
+    : undefined,
 }
 
 export const meta: MetaFunction<

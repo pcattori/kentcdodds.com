@@ -37,17 +37,19 @@ import {
 } from '~/utils/misc.tsx'
 
 export const handle: KCDHandle = {
-  getSitemapEntries: async request => {
-    const episodes = await getEpisodes({request})
-    const seasons = getEpisodesBySeason(episodes)
+  getSitemapEntries: import.meta.env.SSR
+    ? async request => {
+        const episodes = await getEpisodes({request})
+        const seasons = getEpisodesBySeason(episodes)
 
-    return seasons.map(season => {
-      return {
-        route: `/calls/${season.seasonNumber.toString().padStart(2, '0')}`,
-        priority: 0.4,
+        return seasons.map(season => {
+          return {
+            route: `/calls/${season.seasonNumber.toString().padStart(2, '0')}`,
+            priority: 0.4,
+          }
+        })
       }
-    })
-  },
+    : undefined,
 }
 
 type LoaderData = {
