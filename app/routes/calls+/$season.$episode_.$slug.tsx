@@ -26,10 +26,11 @@ import {
   type LoaderData as RootLoaderData,
 } from '~/root.tsx'
 import {
-  useCallsData,
+  handle as callsHandle,
   type loader as callsLoader,
   type LoaderData as CallsLoaderData,
 } from '../calls.tsx'
+import {useMatchLoaderData} from '~/utils/providers.tsx'
 
 export const handle: KCDHandle = {
   id: 'call-player',
@@ -132,7 +133,7 @@ export const headers: HeadersFunction = reuseUsefulLoaderHeaders
 
 export default function Screen() {
   const params = useParams() as Params
-  const {episodes} = useCallsData()
+  const {episodes} = useMatchLoaderData<CallsLoaderData>(callsHandle.id)
   const {requestInfo} = useRootData()
   const episode = getEpisodeFromParams(episodes, params)
 

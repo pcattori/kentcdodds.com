@@ -36,10 +36,7 @@ import {
   getUrl,
   reuseUsefulLoaderHeaders,
 } from '~/utils/misc.tsx'
-import {
-  CallsEpisodeUIStateProvider,
-  useMatchLoaderData,
-} from '~/utils/providers.tsx'
+import {CallsEpisodeUIStateProvider} from '~/utils/providers.tsx'
 import {getSocialMetas} from '~/utils/seo.ts'
 import {getServerTimeHeader} from '~/utils/timing.server.ts'
 import {getEpisodes, getEpisodesBySeason} from '~/utils/transistor.server.ts'
@@ -331,5 +328,3 @@ export default function CallHomeScreen() {
     </>
   )
 }
-
-export const useCallsData = () => useMatchLoaderData<LoaderData>(handle.id)
