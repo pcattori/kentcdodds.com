@@ -1,4 +1,3 @@
-import {cssBundleHref} from '@remix-run/css-bundle'
 import {withSentry} from '@sentry/remix'
 import {
   json,
@@ -42,11 +41,11 @@ import {Spacer} from './components/spacer.tsx'
 import {TeamCircle} from './components/team-circle.tsx'
 import {getGenericSocialImage, illustrationImages, images} from './images.tsx'
 import {Promotification, getPromoCookieValue} from './utils/promo.tsx'
-import appStyles from './styles/app.css'
-import noScriptStyles from './styles/no-script.css'
-import proseStyles from './styles/prose.css'
-import tailwindStyles from './styles/tailwind.css'
-import vendorStyles from './styles/vendors.css'
+import './styles/vendors.css'
+import './styles/tailwind.css'
+import './styles/prose.css'
+import './styles/app.css'
+import noScriptStyles from './styles/no-script.css?inline'
 import {getClientSession} from './utils/client.server.ts'
 import {getEnv} from './utils/env.server.ts'
 import {getLoginInfoSession} from './utils/login.server.ts'
@@ -137,11 +136,6 @@ export const links: LinksFunction = () => {
     },
     {rel: 'manifest', href: '/site.webmanifest'},
     {rel: 'icon', href: '/favicon.ico'},
-    {rel: 'stylesheet', href: vendorStyles},
-    {rel: 'stylesheet', href: tailwindStyles},
-    {rel: 'stylesheet', href: proseStyles},
-    {rel: 'stylesheet', href: appStyles},
-    ...(cssBundleHref ? [{rel: 'stylesheet', href: cssBundleHref}] : []),
   ]
 }
 
@@ -440,7 +434,7 @@ function App() {
           <MetronomeLinks nonce={nonce} />
         ) : null}
         <noscript>
-          <link rel="stylesheet" href={noScriptStyles} />
+          <style dangerouslySetInnerHTML={{__html: noScriptStyles}} />
         </noscript>
       </head>
       <body className="bg-white transition duration-500 dark:bg-gray-900">
