@@ -49,18 +49,17 @@ import {getWorkshops} from '~/utils/workshops.server.ts'
 const handleId = 'blog-post'
 export const handle: KCDHandle = {
   id: handleId,
-  getSitemapEntries: async request => {
-    if (!import.meta.env.SSR) {
-      throw Error('tried calling server-only function from client')
-    }
-    const {getBlogMdxListItems} = await import('~/utils/mdx.server.ts')
-    const pages = await getBlogMdxListItems({request})
-    return pages
-      .filter(page => !page.frontmatter.draft)
-      .map(page => {
-        return {route: `/blog/${page.slug}`, priority: 0.7}
-      })
-  },
+  getSitemapEntries: import.meta.env.SSR
+    ? async request => {
+        const {getBlogMdxListItems} = await import('~/utils/mdx.server.ts')
+        const pages = await getBlogMdxListItems({request})
+        return pages
+          .filter(page => !page.frontmatter.draft)
+          .map(page => {
+            return {route: `/blog/${page.slug}`, priority: 0.7}
+          })
+      }
+    : undefined,
 }
 
 type CatchData = {
