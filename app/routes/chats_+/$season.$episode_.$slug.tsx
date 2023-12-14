@@ -54,7 +54,8 @@ import {type RootLoaderType} from '~/root.tsx'
 export const handle: KCDHandle = {
   getSitemapEntries: import.meta.env.SSR
     ? async request => {
-        const seasons = await getSeasons({request})
+        const simplecast = await import('~/utils/simplecast.server.ts')
+        const seasons = await simplecast.getSeasons({request})
         return seasons.flatMap(season => {
           return season.episodes.map(episode => {
             const s = String(season.seasonNumber).padStart(2, '0')
