@@ -56,7 +56,8 @@ import {useMatchLoaderData} from '~/utils/providers.tsx'
 export const handle: KCDHandle = {
   getSitemapEntries: import.meta.env.SSR
     ? async request => {
-        const workshops = await getWorkshops({request})
+        const utils = await import('~/utils/workshops.server.ts')
+        const workshops = await utils.getWorkshops({request})
         return workshops.map(workshop => {
           return {
             route: `/workshops/${workshop.slug}`,
