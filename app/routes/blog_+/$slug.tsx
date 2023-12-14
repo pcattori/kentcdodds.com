@@ -45,7 +45,6 @@ import {getServerTimeHeader} from '~/utils/timing.server.ts'
 import {useRootData} from '~/utils/use-root-data.ts'
 import {getScheduledEvents} from '~/utils/workshop-tickets.server.ts'
 import {getWorkshops} from '~/utils/workshops.server.ts'
-import {markAsRead} from '../action+/mark-as-read.tsx'
 
 const handleId = 'blog-post'
 export const handle: KCDHandle = {
@@ -308,6 +307,13 @@ development tools and practices. He lives with his wife and four kids in Utah.
       </div>
     </Grid>
   )
+}
+
+async function markAsRead({slug}: {slug: string}) {
+  return fetch('/action/mark-as-read', {
+    method: 'POST',
+    body: new URLSearchParams({slug}),
+  })
 }
 
 export default function MdxScreen() {

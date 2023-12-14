@@ -73,10 +73,3 @@ export async function action({request}: DataFunctionArgs) {
 
   return json({success: true})
 }
-
-export async function markAsRead({slug}: {slug: string}) {
-  return fetch('/action/mark-as-read', {
-    method: 'POST',
-    body: new URLSearchParams({slug}),
-  })
-}
