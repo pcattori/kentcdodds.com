@@ -47,10 +47,11 @@ import {
   type LoaderData as RootLoaderData,
 } from '~/root.tsx'
 import {
-  useWorkshopsData,
+  handle as workshopHandle,
   type loader as WorkshopLoader,
   type LoaderData as WorkshopLoaderData,
 } from './_workshops.tsx'
+import {useMatchLoaderData} from '~/utils/providers.tsx'
 
 export const handle: KCDHandle = {
   getSitemapEntries: import.meta.env.SSR
@@ -177,7 +178,8 @@ function restartArray<ArrayType>(array: Array<ArrayType>, startIndex: number) {
 
 export default function WorkshopScreen() {
   const params = useParams()
-  const {workshopEvents: titoEvents, workshops} = useWorkshopsData()
+  const {workshopEvents: titoEvents, workshops} =
+    useMatchLoaderData<WorkshopLoaderData>(workshopHandle.id)
   const data = useLoaderData<LoaderData>()
   const workshop = workshops.find(w => w.slug === params.slug)
 

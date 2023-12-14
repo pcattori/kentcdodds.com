@@ -25,10 +25,11 @@ import {
   type LoaderData as RootLoaderData,
 } from '~/root.tsx'
 import {
-  useWorkshopsData,
+  handle as workshopHandle,
   type loader as WorkshopLoader,
   type LoaderData as WorkshopLoaderData,
 } from './_workshops.tsx'
+import {useMatchLoaderData} from '~/utils/providers.tsx'
 
 export const meta: MetaFunction<
   {},
@@ -65,7 +66,7 @@ export const meta: MetaFunction<
 export const headers: HeadersFunction = ({parentHeaders}) => parentHeaders
 
 function WorkshopsHome() {
-  const data = useWorkshopsData()
+  const data = useMatchLoaderData<WorkshopLoaderData>(workshopHandle.id)
 
   const tagsSet = new Set<string>()
   for (const workshop of data.workshops) {

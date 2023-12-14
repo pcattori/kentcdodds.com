@@ -54,5 +54,3 @@ function WorkshopsHome() {
 }
 
 export default WorkshopsHome
-
-export const useWorkshopsData = () => useMatchLoaderData<LoaderData>(handle.id)
