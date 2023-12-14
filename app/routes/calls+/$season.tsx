@@ -39,8 +39,9 @@ import {
 export const handle: KCDHandle = {
   getSitemapEntries: import.meta.env.SSR
     ? async request => {
-        const episodes = await getEpisodes({request})
-        const seasons = getEpisodesBySeason(episodes)
+        const transistor = await import('~/utils/transistor.server.ts')
+        const episodes = await transistor.getEpisodes({request})
+        const seasons = transistor.getEpisodesBySeason(episodes)
 
         return seasons.map(season => {
           return {
