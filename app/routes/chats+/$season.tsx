@@ -25,7 +25,8 @@ import {getServerTimeHeader} from '~/utils/timing.server.ts'
 export const handle: KCDHandle = {
   getSitemapEntries: import.meta.env.SSR
     ? async request => {
-        const seasons = await getSeasonListItems({request})
+        const simplecast = await import('~/utils/simplecast.server.ts')
+        const seasons = await simplecast.getSeasonListItems({request})
         return seasons.map(season => {
           return {
             route: `/chats/${season.seasonNumber.toString().padStart(2, '0')}`,
