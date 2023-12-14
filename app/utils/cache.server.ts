@@ -10,9 +10,12 @@ import {
   type CachifiedOptions,
 } from 'cachified'
 import fs from 'fs'
-import {getInstanceInfo, getInstanceInfoSync} from 'litefs-js'
+import {
+  getInstanceInfo,
+  getInstanceInfoSync,
+  getInternalInstanceDomain,
+} from 'litefs-js'
 import {LRUCache} from 'lru-cache'
-import {updatePrimaryCacheValue} from '~/routes/resources+/cache.sqlite.ts'
 import {getRequiredServerEnvVar} from './misc.tsx'
 import {getUser} from './session.server.ts'
 import {time, type Timings} from './timing.server.ts'
@@ -216,3 +219,28 @@ export function isRefreshShaInfo(value: any): value is RefreshShaInfo {
 }
 
 export const commitShaKey = 'meta:last-refresh-commit-sha'
+
+export async function updatePrimaryCacheValue({
+  key,
+  cacheValue,
+}: {
+  key: string
+  cacheValue: any
+}) {
+  const {currentIsPrimary, primaryInstance} = await getInstanceInfo()
+  if (currentIsPrimary) {
+    throw new Error(
+      `updatePrimaryCacheValue should not be called on the primary instance (${primaryInstance})}`,
+    )
+  }
+  const domain = getInternalInstanceDomain(primaryInstance)
+  const token = getRequiredServerEnvVar('INTERNAL_COMMAND_TOKEN')
+  return fetch(`${domain}/resources/cache/sqlite`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({key, cacheValue}),
+  })
+}
