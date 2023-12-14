@@ -36,7 +36,8 @@ export const handle: KCDHandle = {
   id: 'call-player',
   getSitemapEntries: import.meta.env.SSR
     ? async request => {
-        const episodes = await getEpisodes({request})
+        const transistor = await import('~/utils/transistor.server.ts')
+        const episodes = await transistor.getEpisodes({request})
         return episodes.map(episode => {
           return {
             route: getEpisodePath(episode),
