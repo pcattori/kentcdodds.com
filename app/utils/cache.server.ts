@@ -198,3 +198,21 @@ export async function cachified<Value>({
   cachifiedResolved = true
   return result
 }
+
+export type RefreshShaInfo = {
+  sha: string
+  date: string
+}
+
+export function isRefreshShaInfo(value: any): value is RefreshShaInfo {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    'sha' in value &&
+    typeof value.sha === 'string' &&
+    'date' in value &&
+    typeof value.date === 'string'
+  )
+}
+
+export const commitShaKey = 'meta:last-refresh-commit-sha'

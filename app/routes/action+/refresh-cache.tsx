@@ -1,7 +1,7 @@
 import {json, redirect, type DataFunctionArgs} from '@remix-run/node'
 import {ensurePrimary} from '~/utils/cjs/litefs-js.server.js'
 import path from 'path'
-import {cache} from '~/utils/cache.server.ts'
+import {type RefreshShaInfo, cache, commitShaKey} from '~/utils/cache.server.ts'
 import {getPeople} from '~/utils/credits.server.ts'
 import {
   getBlogMdxListItems,
@@ -16,24 +16,6 @@ import {getWorkshops} from '~/utils/workshops.server.ts'
 type Body =
   | {keys: Array<string>; commitSha?: string}
   | {contentPaths: Array<string>; commitSha?: string}
-
-export type RefreshShaInfo = {
-  sha: string
-  date: string
-}
-
-export function isRefreshShaInfo(value: any): value is RefreshShaInfo {
-  return (
-    typeof value === 'object' &&
-    value !== null &&
-    'sha' in value &&
-    typeof value.sha === 'string' &&
-    'date' in value &&
-    typeof value.date === 'string'
-  )
-}
-
-export const commitShaKey = 'meta:last-refresh-commit-sha'
 
 export async function action({request}: DataFunctionArgs) {
   await ensurePrimary()
