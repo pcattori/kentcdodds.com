@@ -41,10 +41,7 @@ import {NotificationMessage} from './components/notification-message.tsx'
 import {Spacer} from './components/spacer.tsx'
 import {TeamCircle} from './components/team-circle.tsx'
 import {getGenericSocialImage, illustrationImages, images} from './images.tsx'
-import {
-  Promotification,
-  getPromoCookieValue,
-} from './routes/resources+/promotification.tsx'
+import {Promotification, getPromoCookieValue} from './utils/promo.tsx'
 import appStyles from './styles/app.css'
 import noScriptStyles from './styles/no-script.css'
 import proseStyles from './styles/prose.css'
