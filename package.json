@@ -70,7 +70,6 @@
     "@reach/tabs": "^0.18.0",
     "@remark-embedder/core": "^3.0.2",
     "@remark-embedder/transformer-oembed": "^3.0.0",
-    "@remix-run/css-bundle": "2.3.0",
     "@remix-run/express": "2.3.0",
     "@remix-run/node": "2.3.0",
     "@remix-run/react": "2.3.0",
