@@ -93,7 +93,7 @@ export default function IndexRoute() {
   return (
     <div>
       <HeroSection
-        title="Helping people make the world a better place through quality software."
+        title="Helping wow make the world a better place through quality software."
         imageBuilder={kodyFlying}
         imageSize="giant"
         arrowUrl="#intro"

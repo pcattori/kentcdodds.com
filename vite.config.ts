@@ -9,7 +9,6 @@ export default defineConfig(() => {
     plugins: [
       remix({
         ignoredRouteFiles: ['**/*'],
-        serverModuleFormat: 'esm',
         routes: async defineRoutes => {
           return flatRoutes('routes', defineRoutes, {
             ignoredRouteFiles: [
